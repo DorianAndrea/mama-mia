@@ -1,39 +1,29 @@
-import Header from "./Header";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { pizzas } from "../assets/pizzas";
 import CardPizza from "./CardPizza";
-import napolitanaImg from "../images/napolitana.jpg";
-import espanolaImg from "../images/espanola.jpg";
-import pepperoniImg from "../images/pepperoni.webp";
 
 const Home = () => {
   return (
-    <>
-      <Header />
-
-      <div className="cards-container">
+    <Container className="mt-4">
+      
+      {/* Card contenedora */}
+      <Card className="p-4 shadow">
         
-        <CardPizza
-          name="Napolitana"
-          price={5950}
-          ingredients={["mozzarella", "tomates", "jamón", "orégano"]}
-          img={napolitanaImg}
-        />
+        <Row>
+          {pizzas.map((pizza) => (
+            <Col key={pizza.id} md={4} className="mb-4">
+              <CardPizza
+                name={pizza.name}
+                price={pizza.price}
+                ingredients={pizza.ingredients}
+                img={pizza.img}
+              />
+            </Col>
+          ))}
+        </Row>
 
-        <CardPizza
-          name="Española"
-          price={6950}
-          ingredients={["mozzarella", "gorgonzola", "parmesano", "provolone"]}
-          img={espanolaImg}
-        />
-
-        <CardPizza
-          name="Pepperoni"
-          price={6950}
-          ingredients={["mozzarella", "pepperoni", "orégano"]}
-          img= {pepperoniImg}
-        />
-
-      </div>
-    </>
+      </Card>
+    </Container>
   );
 };
 

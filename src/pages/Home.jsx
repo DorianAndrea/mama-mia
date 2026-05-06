@@ -1,5 +1,5 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
-import CardPizza from "./CardPizza";
+import CardPizza from "../components/CardPizza";
 import { useEffect, useState } from "react";
 
 const Home = () => {

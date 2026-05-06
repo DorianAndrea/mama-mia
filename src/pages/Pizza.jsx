@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import CardPizza from "./CardPizza";
+import CardPizza from "../components/CardPizza";
 
 const Pizza = () => {
   const [pizzaDetalle, setPizzaDetalle] = useState(null);

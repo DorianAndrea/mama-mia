@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { pizzaCart } from "../assets/pizzas";
 import Button from "react-bootstrap/Button";
 
 const Cart = () => {

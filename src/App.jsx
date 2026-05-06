@@ -1,9 +1,9 @@
 import "./App.css";
 import MyNavbar from "./components/MyNavbar";
-import Home from "./pages/Home";
+//import Home from "./pages/Home";
 import Footer from "./components/Footer";
 //import Cart from "./pages/Cart";
-// import Pizza from "./pages/Pizza";
+import Pizza from "./pages/Pizza";
 //import Register from "./pages/Register";
 // import Login from "./pages/Login";
 
@@ -14,8 +14,8 @@ function App() {
     <>
     <MyNavbar />
     {/* <Cart/>  */}
-    <Home /> 
-    {/* <Pizza/> */}
+    {/* <Home />  */}
+    <Pizza/>
     {/* <Register/> */}
     {/* <Login/> */}
     <Footer /> 

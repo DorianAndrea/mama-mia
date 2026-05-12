@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -43,50 +44,67 @@ const Register = () => {
   };
 
   return (
-    <form className="formulario" onSubmit={validarDatos}>
-      {mensaje && (
-        <div className={`alert alert-${tipoMensaje}`} role="alert">
-          {mensaje}
+    <section className="auth-page">
+      <form className="formulario auth-card" onSubmit={validarDatos}>
+        <div className="auth-icon">🍕</div>
+
+        <h2 className="auth-title">Crear cuenta</h2>
+
+        <p className="auth-subtitle">
+          Regístrate para disfrutar las mejores pizzas
+        </p>
+
+        {mensaje && (
+          <div className={`alert alert-${tipoMensaje}`} role="alert">
+            {mensaje}
+          </div>
+        )}
+
+        <div className="form-group mb-3">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            className="form-control"
+            placeholder="usuario@email.com"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
         </div>
-      )}
 
-      <div className="form-group mb-3">
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          className="form-control"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-      </div>
+        <div className="form-group mb-3">
+          <label>Contraseña</label>
+          <input
+            type="password"
+            name="contrasenna"
+            className="form-control"
+            placeholder="Mínimo 6 caracteres"
+            onChange={(e) => setContrasenna(e.target.value)}
+            value={contrasenna}
+          />
+        </div>
 
-      <div className="form-group mb-3">
-        <label>Contraseña</label>
-        <input
-          type="password"
-          name="contrasenna"
-          className="form-control"
-          onChange={(e) => setContrasenna(e.target.value)}
-          value={contrasenna}
-        />
-      </div>
+        <div className="form-group mb-3">
+          <label>Confirmar contraseña</label>
+          <input
+            type="password"
+            name="confirmContrasenna"
+            className="form-control"
+            placeholder="Repite tu contraseña"
+            onChange={(e) => setConfirContrasenna(e.target.value)}
+            value={confirContrasenna}
+          />
+        </div>
 
-      <div className="form-group mb-3">
-        <label>Confirmar Contraseña</label>
-        <input
-          type="password"
-          name="confirmContrasenna"
-          className="form-control"
-          onChange={(e) => setConfirContrasenna(e.target.value)}
-          value={confirContrasenna}
-        />
-      </div>
+        <button type="submit" className="btn btn-danger auth-button">
+          Registrarme
+        </button>
 
-      <button type="submit" className="btn btn-primary">
-        Enviar
-      </button>
-    </form>
+        <p className="auth-link-text">
+          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+        </p>
+      </form>
+    </section>
   );
 };
 

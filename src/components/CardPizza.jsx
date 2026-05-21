@@ -1,31 +1,42 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
-const CardPizza = ({ name, price, ingredients, img, description }) => {
+const CardPizza = ({ pizza }) => {
+  const { addToCart } = useContext(CartContext);
+
   return (
     <Card style={{ width: "100%" }} className="shadow-sm">
-      <Card.Img variant="top" src={img} alt={name} />
+      <Card.Img variant="top" src={pizza.img} alt={pizza.name} />
 
       <Card.Body>
-        <Card.Title className="text-center">{name}</Card.Title>
+        <Card.Title className="text-center">{pizza.name}</Card.Title>
 
         <hr />
 
         <p className="fw-bold text-center">Ingredientes:</p>
+
         <ul style={{ listStyle: "none", padding: 0, textAlign: "center" }}>
-          {ingredients.map((ingredient, index) => (
+          {pizza.ingredients.map((ingredient, index) => (
             <li key={index}>🍕 {ingredient}</li>
           ))}
         </ul>
 
         <hr />
-         <h6 className="text-center"> {description}</h6>
-        <h5 className="text-center">Precio: ${price.toLocaleString()}</h5>
-        {/* Botones */}
+
+        <h6 className="text-center">{pizza.desc}</h6>
+
+        <h5 className="text-center">
+          Precio: ${pizza.price.toLocaleString()}
+        </h5>
+
         <div className="d-flex justify-content-between mt-3">
           <Button variant="outline-dark">Ver más 👀</Button>
-          <Button variant="dark">Añadir 🛒</Button>
+
+          <Button variant="dark" onClick={() => addToCart(pizza)}>
+            Añadir 🛒
+          </Button>
         </div>
       </Card.Body>
     </Card>

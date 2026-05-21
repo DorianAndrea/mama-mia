@@ -1,45 +1,42 @@
-import { Container, Row, Col, Card } from "react-bootstrap";
-import CardPizza from "../components/CardPizza";
 import { useEffect, useState } from "react";
+import CardPizza from "../components/CardPizza";
 
 const Home = () => {
-   const [pizzasApi, setPizzasApi] = useState([])
-  
+  const [pizzas, setPizzas] = useState([]);
 
-   useEffect(() =>{
-     consultarInformacion();
-   },[])
-   
-   const consultarInformacion = async() =>{
-    const url = "http://localhost:5001/api/pizzas";
-    const response = await fetch(url)
-    const data = await response.json()
-    setPizzasApi(data);
-   }
+  const getPizzas = async () => {
+    try {
+      const response = await fetch("http://localhost:5001/api/pizzas");
+      const data = await response.json();
+      setPizzas(data);
+    } catch (error) {
+      console.log("Error al obtener las pizzas:", error);
+    }
+  };
+
+  useEffect(() => {
+    getPizzas();
+  }, []);
 
   return (
-      <Container className="mt-4">
-      
-      {/* Card contenedora */}
-      <Card className="p-4 shadow">
-        
-        <Row>
-          {pizzasApi.map((pizza, id) => (
-              <Col key={id} md={4} className="mb-4">
-               <CardPizza
-                
-                name={pizza.name}
-                description={pizza.desc}
-                price={pizza.price}
-                ingredients={pizza.ingredients}
-                img={pizza.img}
-              />
-            </Col>
-          ))}
-        </Row>
+    <>
+      <header className="header">
+        <div className="header-content">
+          <h1>¡Pizzería Mamma Mia!</h1>
+          <p>¡Tenemos las mejores pizzas que podrás encontrar!</p>
+        </div>
+      </header>
 
-      </Card>
-    </Container>
+      <main className="container mt-4">
+        <div className="row">
+          {pizzas.map((pizza) => (
+            <div className="col-md-4 mb-4" key={pizza.id}>
+              <CardPizza pizza={pizza} />
+            </div>
+          ))}
+        </div>
+      </main>
+    </>
   );
 };
 

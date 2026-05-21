@@ -1,59 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import Button from "react-bootstrap/Button";
+import { CartContext } from "../context/CartContext";
 
 const Cart = () => {
-  const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    obtenerPizzas();
-  }, []);
-
-  const obtenerPizzas = async () => {
-    try {
-      const response = await fetch("http://localhost:5001/api/pizzas");
-      const data = await response.json();
-
-      const pizzasConCantidad = data.map((pizza) => ({
-        ...pizza,
-        count: 1,
-      }));
-
-      setCart(pizzasConCantidad);
-    } catch (error) {
-      console.error("Error al obtener pizzas para el carrito:", error);
-    }
-  };
-
-  const aumentar = (id) => {
-    const nuevoCart = cart.map((pizza) =>
-      pizza.id === id
-        ? { ...pizza, count: pizza.count + 1 }
-        : pizza
-    );
-
-    setCart(nuevoCart);
-  };
-
-  const disminuir = (id) => {
-    const nuevoCart = cart
-      .map((pizza) =>
-        pizza.id === id
-          ? { ...pizza, count: pizza.count - 1 }
-          : pizza
-      )
-      .filter((pizza) => pizza.count > 0);
-
-    setCart(nuevoCart);
-  };
-
-  const total = cart.reduce(
-    (acc, pizza) => acc + pizza.price * pizza.count,
-    0
-  );
+  const { cart, aumentar, disminuir, total } = useContext(CartContext);
 
   return (
     <div className="container mt-4">
       <h2>🛒 Carrito de compras</h2>
+
+      {cart.length === 0 && <p>Tu carrito está vacío.</p>}
 
       {cart.map((pizza) => (
         <div
@@ -61,12 +17,7 @@ const Cart = () => {
           className="d-flex align-items-center justify-content-between border p-3 mb-3"
         >
           <div className="d-flex align-items-center">
-            <img
-              src={pizza.img}
-              alt={pizza.name}
-              width="80"
-              className="me-3"
-            />
+            <img src={pizza.img} alt={pizza.name} width="80" className="me-3" />
             <h5>{pizza.name}</h5>
           </div>
 

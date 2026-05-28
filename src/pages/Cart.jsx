@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
 
 const Cart = () => {
   const { cart, aumentar, disminuir, total } = useContext(CartContext);
+  const { token } = useContext(UserContext);
 
   return (
     <div className="container mt-4">
@@ -38,8 +40,9 @@ const Cart = () => {
       ))}
 
       <h3>Total: ${total.toLocaleString()}</h3>
-
-      <Button variant="dark">Pagar</Button>
+     
+      <Button variant="dark" disabled={!token}>Pagar</Button>
+      
     </div>
   );
 };

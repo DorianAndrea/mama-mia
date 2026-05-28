@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import CardPizza from "../components/CardPizza";
+import { useParams } from "react-router-dom";
 
 const Pizza = () => {
-  const [pizzaDetalle, setPizzaDetalle] = useState(null);
+  const parametros = useParams();
+  const pizzaSeleccionada = parametros.id;
+  const [pizzaDetalle, setPizzaDetalle] = useState();
 
   useEffect(() => {
     detallePizza();
   }, []);
 
   const detallePizza = async () => {
-    const url = "http://localhost:5001/api/pizzas/p001";
+    const url = "http://localhost:5001/api/pizzas/" + pizzaSeleccionada;
     const response = await fetch(url);
     const data = await response.json();
     setPizzaDetalle(data);
@@ -24,11 +27,8 @@ const Pizza = () => {
       <Container className="mt-4">
       <Card className="p-4 shadow">
         <CardPizza
-          name={pizzaDetalle.name}
-          price={pizzaDetalle.price}
-          ingredients={pizzaDetalle.ingredients}
-          img={pizzaDetalle.img}
-          description={pizzaDetalle.desc}
+          pizza={pizzaDetalle}
+         
         />
       </Card>
     </Container>

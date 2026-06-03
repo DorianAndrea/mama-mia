@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Register = () => {
@@ -8,39 +11,24 @@ const Register = () => {
   const [mensaje, setMensaje] = useState("");
   const [tipoMensaje, setTipoMensaje] = useState("");
 
-  const validarDatos = (e) => {
+  const { register } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const validarDatos = async (e) => {
     e.preventDefault();
 
-    if (!email.trim() || !contrasenna.trim() || !confirContrasenna.trim()) {
+    if (!email || !contrasenna) {
       setMensaje("Todos los campos son obligatorios");
       setTipoMensaje("danger");
       return;
     }
-
-    if (contrasenna.length < 6) {
-      setMensaje("La contraseña debe tener al menos 6 caracteres");
-      setTipoMensaje("danger");
-      return;
-    }
-
-    if (confirContrasenna.length < 6) {
-      setMensaje("La confirmación debe tener al menos 6 caracteres");
-      setTipoMensaje("danger");
-      return;
-    }
-
     if (contrasenna !== confirContrasenna) {
       setMensaje("Las contraseñas no coinciden");
       setTipoMensaje("danger");
       return;
     }
-
-    setMensaje("Datos correctos, las contraseñas coinciden");
-    setTipoMensaje("success");
-
-    setEmail("");
-    setContrasenna("");
-    setConfirContrasenna("");
+    await register(email, contrasenna);
+    navigate("/");
   };
 
   return (

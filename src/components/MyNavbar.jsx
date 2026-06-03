@@ -5,10 +5,17 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const MyNavbar = () => {
   const { total } = useContext(CartContext);
   const { token, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+  
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <Navbar bg="dark" variant="dark">
@@ -25,7 +32,7 @@ const MyNavbar = () => {
                 🔓 Profile
               </Nav.Link>
 
-              <Nav.Link onClick={logout}>🔒 Logout</Nav.Link>
+              <Nav.Link onClick={handleLogout}>🔒 Logout</Nav.Link>
             </>
           ) : (
             <>
@@ -41,7 +48,7 @@ const MyNavbar = () => {
         </Nav>
 
         <Nav>
-          <Nav.Link as={Link} to="/cart">
+          <Nav.Link as={Link} to="/card">
             🛒 Total: ${total.toLocaleString()}
           </Nav.Link>
         </Nav>

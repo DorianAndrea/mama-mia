@@ -1,9 +1,14 @@
-const Profile = () => {
-  const email = "usuario@pizzeria.com";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../context/UserContext";
 
-  const handleLogout = () => {
-    alert("Sesión cerrada");
-  };
+const Profile = () => {
+  const { email, token, logout, getProfile } = useContext(UserContext);
+
+  useEffect(() => {
+    if (token) {
+      getProfile();
+    }
+  }, []);
 
   return (
     <div className="container mt-5">
@@ -17,10 +22,7 @@ const Profile = () => {
                 <strong>Email:</strong> {email}
               </p>
 
-              <button 
-                className="btn btn-danger mt-3"
-                onClick={handleLogout}
-              >
+              <button className="btn btn-danger mt-3" onClick={logout}>
                 Cerrar sesión
               </button>
             </div>

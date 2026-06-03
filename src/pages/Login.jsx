@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext} from "../context/UserContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -7,27 +10,19 @@ const Login = () => {
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [tipoMensaje, setTipoMensaje] = useState("");
+  const {login} = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const validarDatos = (e) => {
+  const validarDatos = async (e) => {
     e.preventDefault();
+    if(!email || !contrasenna){
+      setMensaje("Completa todos los campos");
+      setTipoMensaje("danger")
+      return
 
-    if (!email.trim() || !contrasenna.trim()) {
-      setError("Todos los datos son obligatorios");
-      setMensaje("Datos incorrectos");
-      setTipoMensaje("danger");
-      return;
     }
-
-    if (contrasenna.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres");
-      setMensaje("Datos incorrectos");
-      setTipoMensaje("danger");
-      return;
-    }
-
-    setError("");
-    setMensaje("Datos correctos");
-    setTipoMensaje("success");
+    await login(email,contrasenna)
+    navigate("/")
   };
 
   return (

@@ -1,11 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 
-const Cart = () => {
+const Card = () => {
   const { cart, aumentar, disminuir, total } = useContext(CartContext);
   const { token } = useContext(UserContext);
+  const [mensaje, setMensaje] = useState("");
+
+  const pagar = async () => {
+    await fetch("http://localhost:5001/api/checkouts",{
+      method:"POST",
+      headers:{
+        "Content-Type" : "application/json",
+        Authorization :`Bearer ${token}`,
+      },
+      body: JSON.stringify({cart}),
+    });
+    setMensaje('Compra realizada con éxito')
+  }
 
   return (
     <div className="container mt-4">
@@ -41,10 +54,11 @@ const Cart = () => {
 
       <h3>Total: ${total.toLocaleString()}</h3>
      
-      <Button variant="dark" disabled={!token}>Pagar</Button>
+      <Button variant="dark" disabled={!token} onClick={pagar} >Pagar</Button>
+      {mensaje && <p className="mt-3 text-success">{mensaje}</p>}
       
     </div>
   );
 };
 
-export default Cart;
+export default Card;
